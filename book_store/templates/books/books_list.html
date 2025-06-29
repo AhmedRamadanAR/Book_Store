@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+
+{% block title %} Book Store App {% endblock title %}
+
+{% block content %}
+<h2>This is the Books List</h2>
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <td> ID </td>
+            <td> Name </td>
+            <td> Priority </td>
+            <td> Description </td>
+            <td> Actions </td>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for book in books_list %}
+        <tr>
+            <td> {{ book.id }} </td>
+            <td> {{ book.name }} </td>
+            <td> {{ book.priority }} </td>
+            <td> {{ book.description | truncatewords:2 | title }} </td>
+            <td>
+                <a class="btn btn-info" href="{% url 'bookstore:details-index' book.id %}">View</a>
+                 <a class="btn btn-danger" href="{% url 'bookstore:delete-index' book.id %}">Delete</a>
+                <a class="btn btn-warning" href="{% url 'bookstore:update-index' book.id %}">Update</a>
+
+
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">
+                No books found.
+                
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+                <a class="btn btn-danger" href="{% url 'bookstore:add-index' %}">Add</a>
+
+{% endblock content %}

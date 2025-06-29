@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+
+ {% block title %} TODO App {% endblock title %}
+{% block content %}
+<h2>This is the TODO List</h2>
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <td> ID </td>
+            <td> Name </td>
+            <td> Priority </td>
+            <td> Description </td>
+            <td> Actions </td>
+        </tr>
+    </thead>
+
+    <tbody>
+            <td> {{ book_id }} </td>
+            <td> {{ book_name }} </td>
+            <td> {{ book_priority }} </td>
+            <td> {{ book_description | truncatewords:2 | title}} </td>
+
+       
+    
+    
+    </tbody>
+
+</table>
+<a href = "{% url 'bookstore:book_store-index'%}"> Back to List </a>
+
+{% endblock content %}
