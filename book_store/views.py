@@ -1,6 +1,7 @@
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from .models import Book
+from .forms import BookForm
 # Create your views here.
 
 # books_list = [ 
@@ -57,33 +58,60 @@ def delete_book (request,pk):
    return redirect("bookstore:book_store-index")
 
 
-def update_book(request, pk):
-    book = Book.objects.get(pk=pk)
-    try:
-        book = Book.objects.get(pk=pk)
-    except Book.DoesNotExist:
-        return HttpResponse("Book not found", status=404)
+# def update_book(request, pk):
+#     book = Book.objects.get(pk=pk)
+#     try:
+#         book = Book.objects.get(pk=pk)
+#     except Book.DoesNotExist:
+#         return HttpResponse("Book not found", status=404)
 
-    if request.method == "POST":
+#     if request.method == "POST":
    
-            book.name = request.POST.get("name")
-            book.description =  request.POST.get("description")
-            book.rate =  request.POST.get("rate")
-            book.save
-            return redirect("bookstore:book_store-index")
+#             book.name = request.POST.get("name")
+#             book.description =  request.POST.get("description")
+#             book.rate =  request.POST.get("rate")
+#             book.save
+#             return redirect("bookstore:book_store-index")
               
-    return render(request, "books/book_update.html", {"book": book})
+#     return render(request, "books/book_update.html", {"book": book})
 
 
+
+# def add_book(request):
+
+#     if request.method == "POST":
+#            name = request.POST.get("name")
+#            description =  request.POST.get("description")
+#            rate =  request.POST.get("rate")
+         
+#            Book.objects.create(name=name,description=description,views=2222,rate=rate)
+#            return redirect("bookstore:book_store-index")
+
+#     return render(request, "books/book_update.html")
 
 def add_book(request):
-
-    if request.method == "POST":
-           name = request.POST.get("name")
-           description =  request.POST.get("description")
-           rate =  request.POST.get("rate")
-         
-           Book.objects.create(name=name,description=description,views=2222,rate=rate)
+   form=BookForm()
+   if request.method == "POST":
+      form=BookForm(data=request.POST)
+      if form.is_valid():
+           form.save()
            return redirect("bookstore:book_store-index")
 
-    return render(request, "books/book_update.html")
+   return render(request, "books/book_update.html",context={
+         "form":form
+   })
+
+def update_book(request, pk):
+    book = Book.objects.get(pk=pk)
+
+    form = BookForm(instance=book)
+    if request.method == "post":
+         form = BookForm(instance=book,data=request.POST)
+         if form.is_valid():
+             form.save()
+             return redirect("bookstore:book_store-index")
+              
+    return render(request, "books/book_update.html",
+                   {"form":form,
+                                                      "book": book})
+

@@ -7,7 +7,9 @@
 
 <form method="post">
     {% csrf_token %}
+    {{form.as_p}}
 
+    {% comment %}
     <div class="mb-3">
         <label for="name">Book Name</label>
         <input type="text" class="form-control" name="name" id="name" value="{{ book.name }}">
@@ -21,6 +23,7 @@
     <div class="mb-3">
         <label for="rate">Rate</label>
 rate    </div>
+    {% endcomment %}
 
     <button type="submit" class="btn btn-success">Save</button>
     <a href="{% url 'bookstore:book_store-index' %}" class="btn btn-secondary">Cancel</a>
