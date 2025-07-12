@@ -8,17 +8,15 @@
         <tr>
             <td> ID </td>
             <td> Name </td>
-            <td> Priority </td>
             <td> Description </td>
             <td> Actions </td>
         </tr>
     </thead>
 
     <tbody>
-            <td> {{ book_id }} </td>
-            <td> {{ book_name }} </td>
-            <td> {{ book_priority }} </td>
-            <td> {{ book_description | truncatewords:2 | title}} </td>
+            <td> {{ book.id }} </td>
+            <td> {{ book.name }} </td>
+            <td> {{ book.description | truncatewords:2 | title}} </td>
 
        
     
